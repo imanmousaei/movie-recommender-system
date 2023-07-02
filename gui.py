@@ -1,4 +1,5 @@
 import streamlit as st
+from api import *
 
 
 
@@ -10,7 +11,7 @@ def build_gui():
     if movie_id:
         try:
             movie_id = int(movie_id)
-            movie_details = get_movie_details(movie_id)
+            movie_details = get_movie_info(movie_id)
             st.subheader(movie_details["title"])
             st.image(f"https://image.tmdb.org/t/p/w500{movie_details['poster_path']}")
             st.write("Overview:", movie_details["overview"])

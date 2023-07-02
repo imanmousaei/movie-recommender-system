@@ -33,7 +33,7 @@ def get_movie_info(imdb_id):
     awards = movie_details["Awards"]
 
     poster_path = f"posters/{movie_id}.jpg"
-    if not os.path.exists(poster_path):
+    if not os.path.exists(poster_path): # if poster is already saved, don't bother downloading it
         poster_image = get_movie_poster(movie_id)
         if poster_image:
             with open(poster_path, "wb") as f:
