@@ -1,1 +1,4 @@
 .vscode/
+movies-dataset/
+**/__pycache__/**
+secret.py

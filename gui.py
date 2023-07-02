@@ -1,34 +1,7 @@
 import streamlit as st
-import requests
 
-# TMDB API configuration
-API_KEY = "YOUR_API_KEY"
-BASE_URL = "https://api.themoviedb.org/3"
 
-# Function to get movie recommendations
-def get_movie_recommendations(movie_id):
-    url = f"{BASE_URL}/movie/{movie_id}/recommendations"
-    params = {
-        "api_key": API_KEY,
-        "language": "en-US",
-        "page": 1
-    }
-    response = requests.get(url, params=params)
-    data = response.json()
-    return data["results"]
 
-# Function to get movie details
-def get_movie_details(movie_id):
-    url = f"{BASE_URL}/movie/{movie_id}"
-    params = {
-        "api_key": API_KEY,
-        "language": "en-US"
-    }
-    response = requests.get(url, params=params)
-    data = response.json()
-    return data
-
-# Streamlit app
 def build_gui():
     st.title("Movie Recommender System")
 
