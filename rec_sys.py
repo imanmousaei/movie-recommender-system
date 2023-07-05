@@ -1,26 +1,48 @@
 import numpy as np
-from sklearn.cluster import KMeans, AgglomerativeClustering, DBSCAN
+from sklearn.cluster import KMeans, DBSCAN, AgglomerativeClustering, MiniBatchKMeans, SpectralClustering, MeanShift, Birch
 import recmetrics
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
 
 
-
-# Generate movie features matrix
-movies = np.array([[1, 0, 1, 0, 0],
-                   [0, 1, 0, 1, 0],
-                   [1, 1, 0, 0, 0],
-                   [0, 0, 0, 1, 1],
-                   [0, 0, 1, 0, 1],
-                   [1, 1, 0, 1, 0]])
-
 # Cluster-based methods
-methods = {
-    "K-means": KMeans(n_clusters=2),
-    "Hierarchical": AgglomerativeClustering(n_clusters=2),
-    "DBSCAN": DBSCAN(eps=0.3, min_samples=2)
+n_clusters = 3
+
+clustering_algorithms = {
+    'KMeans': KMeans(n_clusters=n_clusters, random_state=42, n_init='auto'),
+    "Hierarchical": AgglomerativeClustering(n_clusters=n_clusters),
+    'DBSCAN': DBSCAN(eps=2, min_samples=5),
+    'MiniBatchKMeans': MiniBatchKMeans(n_clusters=n_clusters, n_init="auto"),
+    'MeanShift': MeanShift(bin_seeding=True),
+    'GaussianMixture': GaussianMixture(
+        n_components=n_clusters, covariance_type="full"
+    ),
+    'Birch': Birch(n_clusters=n_clusters),
 }
+
+
+X = np.loadtxt('PCA_X.np')
+
+plot_num = 0
+for name, algorithm in clustering_algorithms.items():
+  X_std = pca_2
+  plot_num += 1
+
+  algorithm.fit(X_std)
+  if hasattr(algorithm, "labels_"):
+    y_pred = algorithm.labels_.astype(int)
+  else:
+    y_pred = algorithm.predict(X_std)
+
+  plt.subplot(2, 3, plot_num)
+  plt.subplots_adjust(hspace=1)
+  plt.scatter(X_std[:, 0], X_std[:, 1], color=colors[y_pred])
+  plt.title(f'PCA2: {name}')
+
+  print(f'{name} finished')
+
+plt.show()
 
 # Evaluate each method using Intra-list Similarity
 for method_name, method in methods.items():
