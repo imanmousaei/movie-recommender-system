@@ -41,7 +41,7 @@ def prepare_clustering_algorithms():
         print(f'{name} finished')
 
 
-def get_clustering_recommendations(algorithm_name, num_recommendations, movie_id):
+def get_clustering_recommendations(imdb_id, algorithm_name, num_recommendations):
     algorithm_name = algorithm_name.lower()
     filename = f'clustering/{algorithm_name}.csv'
 
@@ -49,15 +49,15 @@ def get_clustering_recommendations(algorithm_name, num_recommendations, movie_id
 
     df = pd.read_csv(filename)
 
-    movie_cluster = df.loc[df['id'] == movie_id, 'cluster'].values[0]
+    movie_cluster = df.loc[df['imdb_id'] == imdb_id, 'cluster'].values[0]
     similar_movies = df[df['cluster'] == movie_cluster]
-    similar_movies = similar_movies[similar_movies.index != movie_id]
+    similar_movies = similar_movies[similar_movies.index != imdb_id]
     similar_movies = similar_movies.sample(num_recommendations)
 
     return similar_movies['imdb_id'].values
 
 
-def get_closest_movies(movie_id):
+def get_closest_movies(imdb_id):
     # Create an instance of KNN algorithm
     knn = NearestNeighbors(n_neighbors=n)
 

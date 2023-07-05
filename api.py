@@ -22,10 +22,11 @@ def get_movie_poster(movie_id):
         return response.content
     None
 
+
 def get_movie_info(imdb_id):
     movie_id = f"tt{imdb_id}"
-    movie_details = call_movie_api(movie_id)
-    
+    movie_details = call_movie_api(imdb_id)
+
     title = movie_details["Title"]
     year = movie_details["Year"]
     plot = movie_details["Plot"]
@@ -33,12 +34,13 @@ def get_movie_info(imdb_id):
     awards = movie_details["Awards"]
 
     poster_path = f"posters/{movie_id}.jpg"
-    if not os.path.exists(poster_path): # if poster is already saved, don't bother downloading it
+    # if poster is already saved, don't bother downloading it
+    if not os.path.exists(poster_path):
         poster_image = get_movie_poster(movie_id)
         if poster_image:
             with open(poster_path, "wb") as f:
                 f.write(poster_image)
         else:
             print("No poster available.")
-            
+
     return title, year, plot, genre, awards, poster_path
