@@ -3,8 +3,8 @@ import pandas as pd
 import numpy as np
 from sklearn.cluster import KMeans, DBSCAN, AgglomerativeClustering, MiniBatchKMeans, SpectralClustering, MeanShift, Birch
 from sklearn.neighbors import NearestNeighbors
-import recmetrics
 from numpy.linalg import norm
+# import recmetrics
 
 
 n_clusters = 10

@@ -9,6 +9,8 @@ def build_gui():
     imdb_id = st.text_input("Enter a movie IMDB ID:")
     if imdb_id:
         try:
+            
+            print('imdb_id', imdb_id)
             title, year, plot, genre, awards, poster_path = get_movie_info(imdb_id)
             
             st.subheader(title)
