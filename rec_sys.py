@@ -19,69 +19,66 @@ clustering_algorithms = {
 }
 
 
-def prepare_clustering_algorithms(df):
-  for name, algorithm in clustering_algorithms.items():
-    name = name.lower()
-    filename = f'clustering/{name}.csv'
-    if os.path.exists(filename):
-      continue
-    
-    data = df.drop(['id', 'imdb_id'], axis=1)
+def prepare_clustering_algorithms():
+    df = pd.read_csv('cleaned-dataset/pca_500.csv')
 
-    algorithm.fit(data)
-    if hasattr(algorithm, "labels_"):
-      clusters = algorithm.labels_.astype(int)
-    else:
-      clusters = algorithm.predict(data)
-    
-    df['cluster'] = clusters
-    df.to_csv(filename)
-    print(f'{name} finished')
+    for name, algorithm in clustering_algorithms.items():
+        name = name.lower()
+        filename = f'clustering/{name}.csv'
+        if os.path.exists(filename):
+            continue
+
+        data = df.drop(['id', 'imdb_id'], axis=1)
+
+        algorithm.fit(data)
+        if hasattr(algorithm, "labels_"):
+            clusters = algorithm.labels_.astype(int)
+        else:
+            clusters = algorithm.predict(data)
+
+        df['cluster'] = clusters
+        df.to_csv(filename)
+        print(f'{name} finished')
 
 
-def get_clustering_recommendations(algorithm_name, num_recommendations):
-  algorithm_name = algorithm_name.lower()
-  filename = f'clustering/{algorithm_name}.csv'
-  
-  df = pd.read_csv(filename)
-  
-  movie_cluster = clusters[movie_id]
-  similar_movies = df[df['clusters'] == movie_cluster]
-  similar_movies = similar_movies[similar_movies.index != movie_id]
-  similar_movies = similar_movies.sample(num_recommendations)
-  return similar_movies
-  
-  given_movie_cluster = kmeans.predict(movie_feature_matrix[given_movie_index].reshape(1, -1))
-  same_cluster_indices = np.where(kmeans.labels_ == given_movie_cluster)[0]
+def get_clustering_recommendations(algorithm_name, num_recommendations, movie_id):
+    algorithm_name = algorithm_name.lower()
+    filename = f'clustering/{algorithm_name}.csv'
 
+    # todo: handle movie collections
+
+    df = pd.read_csv(filename)
+
+    movie_cluster = df.loc[df['id'] == movie_id, 'cluster'].values[0]
+    similar_movies = df[df['cluster'] == movie_cluster]
+    similar_movies = similar_movies[similar_movies.index != movie_id]
+    similar_movies = similar_movies.sample(num_recommendations)
+
+    return similar_movies['imdb_id'].values
 
 
 def get_closest_movies(movie_id):
-  # Create an instance of KNN algorithm
-  knn = NearestNeighbors(n_neighbors=n)
+    # Create an instance of KNN algorithm
+    knn = NearestNeighbors(n_neighbors=n)
 
-  # Fit the data to KNN algorithm
-  knn.fit(movie_data)
+    # Fit the data to KNN algorithm
+    knn.fit(movie_data)
 
-  # Calculate distances and indices of nearest neighbors for a given movie
-  distances, indices =n.kneighbors(query_movie)
+    # Calculate distances and indices of nearest neighbors for a given movie
+    distances, indices = n.kneighbors(query_movie)
 
-  # Get the n closest movies
-  closest_movies = movie_data.iloc[indices[0]]
-
+    # Get the n closest movies
+    closest_movies = movie_data.iloc[indices[0]]
 
 
 def get_closest_cosine_similarity(movie_id):
-  # Assuming you have a movie_feature_matrix as your dataset
-  similarity_matrix = np.dot(A,A)/(norm(A)*norm(A))
+    # Assuming you have a movie_feature_matrix as your dataset
+    similarity_matrix = np.dot(A, A)/(norm(A)*norm(A))
 
-  # Assuming given_movie_index is the index of the given movie
-  sorted_indices = np.argsort(similarity_matrix[given_movie_index])[::-1]
+    # Assuming given_movie_index is the index of the given movie
+    sorted_indices = np.argsort(similarity_matrix[given_movie_index])[::-1]
 
-  # Assuming n is the number of closest movies you want to retrieve
-  closest_movie_indices = sorted_indices[1:n+1]  # Exclude given movie index
+    # Assuming n is the number of closest movies you want to retrieve
+    closest_movie_indices = sorted_indices[1:n+1]  # Exclude given movie index
 
-  closest_movies = movie_dataset.iloc[closest_movie_indices]
-
-
-
+    closest_movies = movie_dataset.iloc[closest_movie_indices]
