@@ -5,6 +5,7 @@ from tqdm import tqdm
 from sklearn.preprocessing import MultiLabelBinarizer
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
+from prince import MCA
 
 
 def one_hot_column(df, column_name):
@@ -100,12 +101,19 @@ def scale_and_PCA(df, n_components):
     pca = PCA(n_components=n_components)
     pca_X = pca.fit_transform(X)
     print('pca_X', pca_X.shape)
+    print("Variance coverage: ", pca.explained_variance_ratio_)
+    print("Sum of Variance coverage: ", np.sum(pca.explained_variance_ratio_))
     
+    # mca = MCA(n_components=n_components)
+    # mca.fit(numerical_cols)
+    # mca_X = mca.transform(numerical_cols)
+    # print(mca.explertia_inained_)
+
     df_pca = pd.DataFrame(data=pca_X, columns=[f'PC{i}' for i in range(n_components)])
     df_pca['id'] = df['id']
     df_pca['imdb_id'] = df['imdb_id']
     
-    df_pca.to_csv('pca_df.csv', index=False)
+    df_pca.to_csv(f'cleaned-dataset/pca_{n_components}.csv', index=False)
     
     # Export the array to a file
     # np.savetxt(f'PCA_{n_components}.np', pca_X)    
@@ -123,4 +131,7 @@ if __name__ == '__main__':
     df['id'] = df['id'].astype(str)
     df['imdb_id'] = df['imdb_id'].astype(str)
     
-    scale_and_PCA(df, n_components=100)
+    # 100 PC: 53.65% of variance
+    # 300 PC: 64.2% of variance
+    # 500 PC: 70% of variance
+    scale_and_PCA(df, n_components=500)

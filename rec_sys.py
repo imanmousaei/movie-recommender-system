@@ -1,5 +1,5 @@
 import numpy as np
-from sklearn.cluster import KMeans, DBSCAN, AgglomerativeClustering, MiniBatchKMeans, SpectralClustering, MeanShift, Birch
+from sklearn.cluster import KMeans, DBSCAN, AgglomerativeClustering, MiniBatchKMeans, SpectralClustering, MeanShift, Birch, GaussianMixture
 import recmetrics
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
