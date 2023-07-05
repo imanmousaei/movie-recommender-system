@@ -1,5 +1,6 @@
 .vscode/
 movies-dataset/
 cleaned-dataset/
+clustering/
 **/__pycache__/**
 secret.py
