@@ -45,7 +45,6 @@ def get_clustering_recommendations(imdb_id, algorithm_name, num_recommendations)
     filename = f'clustering/{algorithm_name}.csv'
 
     # todo: handle movie collections
-    # todo: clustering metrics
 
     df = pd.read_csv(filename)
 
