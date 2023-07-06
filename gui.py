@@ -14,8 +14,8 @@ def recommender(imdb_id, recommendation_id):
         global_recommendations = []
         global_imdb_id = imdb_id
     
-    title, year, plot, genre, awards, poster_path = get_movie_info(imdb_id)
     if recommendation_id == None:
+        title, year, plot, genre, awards, poster_path = get_movie_info(imdb_id)
         poster = Image.open(poster_path)
         return title, year, plot, genre, awards, poster
     
@@ -24,7 +24,7 @@ def recommender(imdb_id, recommendation_id):
     
     if len(global_recommendations) == 0:
         num_recommendations = 5
-        recommendations = get_clustering_recommendations(imdb_id, 'dbscan', num_recommendations=num_recommendations)
+        recommendations = get_clustering_recommendations(imdb_id, 'Hierarchical', num_recommendations=num_recommendations)
         global_recommendations = recommendations
         
     print('global_recommendations', global_recommendations)

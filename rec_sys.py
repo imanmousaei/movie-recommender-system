@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 import numpy as np
-from sklearn.cluster import KMeans, DBSCAN, AgglomerativeClustering, MiniBatchKMeans, SpectralClustering, MeanShift, Birch
+from sklearn.cluster import KMeans, DBSCAN, AgglomerativeClustering, MiniBatchKMeans, MeanShift, Birch
 from sklearn.neighbors import NearestNeighbors
 from numpy.linalg import norm
 # import recmetrics
@@ -46,12 +46,13 @@ def get_clustering_recommendations(imdb_id, algorithm_name, num_recommendations)
     filename = f'clustering/{algorithm_name}.csv'
 
     # todo: handle movie collections
+    # todo: clustering metrics
 
     df = pd.read_csv(filename)
 
     movie_cluster = df.loc[df['imdb_id'] == imdb_id, 'cluster'].values[0]
     similar_movies = df[df['cluster'] == movie_cluster]
-    similar_movies = similar_movies[similar_movies.index != imdb_id]
+    similar_movies = similar_movies[similar_movies['imdb_id'] != imdb_id]
     similar_movies = similar_movies.sample(num_recommendations)
 
     return similar_movies['imdb_id'].values
