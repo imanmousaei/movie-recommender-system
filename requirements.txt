@@ -3,3 +3,4 @@ recmetrics
 sklearn
 numpy
 tqdm
+matplotlib

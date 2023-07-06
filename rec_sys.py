@@ -4,7 +4,6 @@ import numpy as np
 from sklearn.cluster import KMeans, DBSCAN, AgglomerativeClustering, MiniBatchKMeans, MeanShift, Birch
 from sklearn.neighbors import NearestNeighbors
 from numpy.linalg import norm
-# import recmetrics
 
 
 n_clusters = 10
@@ -12,7 +11,7 @@ n_clusters = 10
 clustering_algorithms = {
     'KMeans': KMeans(n_clusters=n_clusters, random_state=42, n_init='auto'),
     "Hierarchical": AgglomerativeClustering(n_clusters=n_clusters),
-    'DBSCAN': DBSCAN(eps=2, min_samples=5),
+    # 'DBSCAN': DBSCAN(eps=2, min_samples=5),
     'MiniBatchKMeans': MiniBatchKMeans(n_clusters=n_clusters, n_init="auto"),
     'MeanShift': MeanShift(bin_seeding=True),
     'Birch': Birch(n_clusters=n_clusters),
