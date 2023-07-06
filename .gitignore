@@ -1,6 +1,8 @@
 .vscode/
+**/__pycache__/**
+
+secret.py
 movies-dataset/
 cleaned-dataset/
 clustering/
-**/__pycache__/**
-secret.py
+posters/
