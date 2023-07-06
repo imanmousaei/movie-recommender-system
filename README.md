@@ -9,14 +9,8 @@ https://github.com/imanmousaei/movie-recommender-system/assets/33493057/fd588c4f
 make run
 ```
 
+## Github:
+[imanmousaei/movie-recommender-system](https://github.com/imanmousaei/movie-recommender-system)
+
 ## Hugging Face:
-[https://huggingface.co/spaces/imanmousaei/movie-recommender](https://huggingface.co/spaces/imanmousaei/movie-recommender)
-
-
-## Report:
-
-1. Clean data
-2. Merge datasets
-3. Could not EDA because big data
-4. Clustering
-5. 
+[imanmousaei/movie-recommender](https://huggingface.co/spaces/imanmousaei/movie-recommender/tree/master)
