@@ -9,4 +9,4 @@ if __name__ == '__main__':
     # recom_ids = get_clustering_recommendations(imdb_id, 'kmeans', num_recommendations=5)
     # print('recom_ids', recom_ids)
 
-    gui.build_gui()
+    gui.build_gradio_gui()
